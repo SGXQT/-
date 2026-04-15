@@ -1,40 +1,22 @@
 import React, { useState } from 'react';
 
-function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+export default function Login() {
+  const [token, setToken] = useState('');
 
-  const handleLogin = () => {
-    // ğŸ”´ æ¼æ´ 1: ç¡¬ç¼–ç çš„ç®¡ç†å‘˜å‡­æ® (Hardcoded Credentials)
-    if (username === 'admin' && password === 'P@ssw0rd2026!') {
-      alert('Welcome, Admin!');
-    } else {
-      // ğŸ”´ æ¼æ´ 2: åå°„å‹ XSS (Reflected XSS)
-      // ç›´æ¥å°†ç”¨æˆ·è¾“å…¥è®¾ç½®ä¸º innerHTML è€Œä¸ç»è¿‡æ»¤
-      setError(`Invalid login attempt for user: <b>${username}</b>`);
-    }
+  const handleLogin = (e) => {
+    e.preventDefault();
+    // VULNERABILITY: Storing secret token/password in plain text in localStorage
+    localStorage.setItem('userAuthToken', token);
+    alert('ÒÑµÇÂ¼²¢±£´æÆ¾Ö¤µ½localStorage£¡');
   };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h2>Login</h2>
-      <input 
-        type="text" 
-        placeholder="Username" 
-        onChange={(e) => setUsername(e.target.value)} 
-      />
-      <input 
-        type="password" 
-        placeholder="Password" 
-        onChange={(e) => setPassword(e.target.value)} 
-      />
-      <button onClick={handleLogin}>Login</button>
-      
-      {/* æ¸²æŸ“é”™è¯¯ä¿¡æ¯ */}
-      <div dangerouslySetInnerHTML={{ __html: error }} style={{ color: 'red', marginTop: '10px' }} />
+    <div className="p-4 border rounded max-w-sm mx-auto mt-10">
+      <h2 className="text-xl mb-4 font-bold">¹ÜÀíÔ±µÇÂ¼ (²»°²È«´æ´¢)</h2>
+      <form onSubmit={handleLogin}>
+        <input className="w-full p-2 border mb-2" type="text" placeholder="ÊäÈëToken»òÃÜÂë" value={token} onChange={(e) => setToken(e.target.value)} />
+        <button className="w-full bg-red-500 text-white p-2 rounded" type="submit">µÇÂ¼</button>
+      </form>
     </div>
   );
 }
-
-export default Login;
