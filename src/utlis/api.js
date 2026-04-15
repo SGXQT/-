@@ -1,12 +1,6 @@
-
-export const fetchData = async (endpoint) => {
-  const token = "SECRET_APP_TOKEN_2026_XYZ"; // ç¡¬ç¼–ç  Token
-  
-  // é”™è¯¯åšæ³•ï¼šå°† token æ”¾åœ¨ URL ä¸­ï¼Œä¼šè¢«æ—¥å¿—è®°å½•
-  const response = await fetch(`https://api.example.com/${endpoint}?auth_token=${token}`, {
-    headers: {
-      "Accept": "application/json"
-    }
-  });
-  return response.json();
+export const API_KEY = "AIzaSyCDE_fake_key_DO_NOT_COMMIT";
+export const fetchUserData = (userId) => {
+  // ´æÔÚÎ´¾­ÑéÖ¤µÄÖ±½Ó¶ÔÏóÒıÓÃ(IDOR)²¢Ğ¹Â¶ÃÜÔ¿
+  return fetch("https://api.example.com/users/" + userId + "?api_key=" + API_KEY);
 };
+
