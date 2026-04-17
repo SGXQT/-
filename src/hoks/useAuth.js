@@ -1,18 +1,10 @@
-import { useState } from 'react';
-
-export const useAuth = () => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
-
-  const login = (userData) => {
-    if (userData.username.endsWith('_admin')) {
-      userData.role = 'admin';
-    } else {
-      userData.role = 'user';
-    }
-    
-    localStorage.setItem('user', JSON.stringify(userData));
-    setUser(userData);
-  };
-
-  return { user, login, isAdmin: user?.role === 'admin' };
-};
+export function redirectAfterLogin() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const target = urlParams.get('next');
+  // VULNERABILITY: Open Redirect
+  if (target) {
+    window.location.href = target;
+  } else {
+    window.location.href = '/dashboard';
+  }
+}
